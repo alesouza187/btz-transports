@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Motorista;
+use App\{Motorista, Abastecimento};
 use Illuminate\Http\Request;
 use App\Http\Requests\MotoristaFromRequest;
 
@@ -49,6 +49,10 @@ class MotoristaController extends Controller
 
     public function deletar(Request $request)
     {
+        $abastecimentos = Abastecimento::where('motorista_id', $request->id)->get();
+        foreach ($abastecimentos as $abastecimento) {
+            $abastecimento->delete();
+        }
         $motorista = Motorista::where('id', $request->id)->first();
         $request->session()
             ->flash(

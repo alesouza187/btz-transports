@@ -30,7 +30,9 @@
                 <select class="form-control" id="motorista_id" name="motorista_id">
                     <option value="">Selecione</option>
                     @foreach ($motoristas as $motorista)
+                    @if ($motorista->status == 'S')
                     <option value="{{ $motorista->id }}">{{ $motorista->nome }}</option>
+                    @endif
                     @endforeach
                 </select>
             </div>

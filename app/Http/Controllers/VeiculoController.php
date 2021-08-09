@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\{Veiculo, Tipo_combustivel};
+use App\{Veiculo, Tipo_combustivel, Abastecimento};
 use Illuminate\Http\Request;
 use App\Http\Requests\VeiculoFromRequest;
 
@@ -51,6 +51,10 @@ class VeiculoController extends Controller
 
     public function deletar(Request $request)
     {
+        $abastecimentos = Abastecimento::where('veiculo_id', $request->id)->get();
+        foreach ($abastecimentos as $abastecimento) {
+            $abastecimento->delete();
+        }
         $veiculo = Veiculo::where('id', $request->id)->first();
         $request->session()
             ->flash(
